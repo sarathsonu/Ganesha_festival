@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Happy Ganesh Chaturthi! 🌸🐘</title>
+    <style>
+        /* CSS STYLES */
+        :root {
+            --primary: #FF5722;
+            --accent: #FFD700;
+            --bg-top: #1a0826;
+            --bg-bottom: #4a1236;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', system-ui, -apple-system, Roboto, sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background: linear-gradient(135deg, var(--bg-top), var(--bg-bottom));
+            color: #fff;
+            min-height: 100vh;
+            overflow-x: hidden;
+            text-align: center;
+            padding-bottom: 30px;
+        }
+
+        /* Floating background particles */
+        .petal {
+            position: fixed;
+            top: -10%;
+            font-size: clamp(1rem, 4vw, 1.5rem);
+            user-select: none;
+            pointer-events: none;
+            z-index: 1;
+            animation: fall linear infinite;
+        }
+
+        @keyframes fall {
+            0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(105vh) rotate(360deg); opacity: 0; }
+        }
+
+        /* Header */
+        header {
+            padding: 20px 15px 10px;
+            z-index: 10;
+            position: relative;
+        }
+
+        h1 {
+            font-size: clamp(1.8rem, 6vw, 3rem);
+            color: var(--accent);
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.6), 0 0 20px rgba(255, 87, 34, 0.8);
+            animation: glow 2s ease-in-out infinite alternate;
+            line-height: 1.2;
+        }
+
+        p.subtitle {
+            font-size: clamp(0.9rem, 3.5vw, 1.2rem);
+            color: #ffe0b2;
+            margin-top: 8px;
+            padding: 0 10px;
+        }
+
+        @keyframes glow {
+            from { text-shadow: 0 0 10px #FFD700, 0 0 20px #FF5722; }
+            to { text-shadow: 0 0 20px #FFD700, 0 0 30px #ff9800; }
+        }
+
+        /* Shrine Container */
+        .shrine-container {
+            position: relative;
+            width: 100%;
+            max-width: 500px;
+            margin: 10px auto;
+            padding: 10px;
+            z-index: 5;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* Ganesha SVG Illustration */
+        .ganesha-svg {
+            width: min(70vw, 260px);
+            height: auto;
+            filter: drop-shadow(0 0 15px rgba(255, 215, 0, 0.4));
+            animation: float 4s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        /* Aura Glow Effect */
+        .aura {
+            position: absolute;
+            top: 45%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: min(75vw, 280px);
+            height: min(75vw, 280px);
+            background: radial-gradient(circle, rgba(255,215,0,0.3) 0%, rgba(255,87,34,0) 70%);
+            border-radius: 50%;
+            z-index: -1;
+            animation: pulse 3s infinite alternate;
+        }
+
+        @keyframes pulse {
+            0% { transform: translate(-50%, -50%) scale(0.9); opacity: 0.5; }
+            100% { transform: translate(-50%, -50%) scale(1.15); opacity: 0.9; }
+        }
+
+        /* Aarti Diya Animation */
+        .aarti-plate {
+            position: absolute;
+            bottom: 60px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: clamp(2rem, 8vw, 3rem);
+            display: none;
+            pointer-events: none;
+            z-index: 20;
+        }
+
+        .aarti-plate.active {
+            display: block;
+            animation: rotateAarti 2.5s infinite ease-in-out;
+        }
+
+        @keyframes rotateAarti {
+            0% { transform: translate(-50%, 0) scale(1); }
+            25% { transform: translate(-70px, -30px) scale(1.1); }
+            50% { transform: translate(-50%, -60px) scale(1.2); }
+            75% { transform: translate(20px, -30px) scale(1.1); }
+            100% { transform: translate(-50%, 0) scale(1); }
+        }
+
+        /* Offering Tray */
+        .offering-display {
+            min-height: 40px;
+            margin-top: 10px;
+            font-size: clamp(1.4rem, 5vw, 2rem);
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 5px;
+            padding: 0 10px;
+        }
+
+        /* Blessing Output Box */
+        .blessing-box {
+            min-height: 45px;
+            font-size: clamp(0.95rem, 3.8vw, 1.2rem);
+            color: #FFD700;
+            font-weight: bold;
+            margin: 10px auto;
+            padding: 0 15px;
+            max-width: 500px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.8);
+        }
+
+        /* Controls Panel (Touch Friendly Grid) */
+        .controls {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            margin: 15px auto;
+            width: 90%;
+            max-width: 500px;
+            z-index: 10;
+            position: relative;
+        }
+
+        .btn {
+            background: linear-gradient(45deg, #FF5722, #FF9800);
+            border: 2px solid #FFD700;
+            color: white;
+            padding: 12px 10px;
+            font-size: clamp(0.9rem, 3.5vw, 1rem);
+            font-weight: bold;
+            border-radius: 25px;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            transition: transform 0.15s ease, box-shadow 0.15s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            min-height: 48px;
+            user-select: none;
+        }
+
+        .btn:active {
+            transform: scale(0.95);
+            box-shadow: 0 2px 8px rgba(255, 215, 0, 0.4);
+        }
+
+        /* Mini Game Container */
+        .game-section {
+            background: rgba(0, 0, 0, 0.4);
+            border: 2px dashed #FFD700;
+            border-radius: 15px;
+            width: 90%;
+            max-width: 450px;
+            margin: 20px auto;
+            padding: 15px 10px;
+            position: relative;
+            z-index: 10;
+            touch-action: none; /* Prevents page scroll while playing game on touch screens */
+        }
+
+        .game-section h2 {
+            font-size: clamp(1.1rem, 4vw, 1.4rem);
+            color: var(--accent);
+        }
+
+        #game-canvas {
+            background: #2a0833;
+            border-radius: 10px;
+            border: 2px solid #FF9800;
+            display: block;
+            margin: 12px auto 0;
+            width: 100%;
+            max-width: 360px;
+            height: auto;
+            aspect-ratio: 3 / 2;
+            cursor: pointer;
+            touch-action: none;
+        }
+
+        footer {
+            padding: 15px;
+            font-size: 0.85rem;
+            color: #d1c4e9;
+            z-index: 10;
+            position: relative;
+        }
+
+        /* Desktop / Wider Viewport Adjustments */
+        @media (min-width: 600px) {
+            .controls {
+                grid-template-columns: repeat(4, 1fr);
+                max-width: 650px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header Section -->
+    <header>
+        <h1>🎉 Happy Ganesh Chaturthi 🎉</h1>
+        <p class="subtitle">Interactive Divine Celebration</p>
+    </header>
+
+    <!-- Shrine Section -->
+    <div class="shrine-container">
+        <div class="aura"></div>
+        
+        <!-- Animated Aarti Plate -->
+        <div class="aarti-plate" id="aartiPlate">🪔</div>
+
+        <!-- SVG Ganesha Vector -->
+        <svg class="ganesha-svg" viewBox="0 0 200 220" xmlns="http://www.w3.org/2000/svg">
+            <!-- Crown / Mukut -->
+            <path d="M 70 50 L 100 5 L 130 50 L 115 50 L 100 20 L 85 50 Z" fill="#FFD700" stroke="#FF5722" stroke-width="2"/>
+            <circle cx="100" cy="25" r="5" fill="#E91E63"/>
+            <rect x="75" y="48" width="50" height="12" fill="#FF9800" rx="3"/>
+
+            <!-- Ears -->
+            <path d="M 75 60 C 20 50, 20 100, 70 105 Z" fill="#FF9800" stroke="#FF5722" stroke-width="2"/>
+            <path d="M 125 60 C 180 50, 180 100, 130 105 Z" fill="#FF9800" stroke="#FF5722" stroke-width="2"/>
+            
+            <!-- Face / Head -->
+            <ellipse cx="100" cy="80" rx="30" ry="25" fill="#FFB74D"/>
+            
+            <!-- Tilak -->
+            <path d="M 92 60 Q 100 55 108 60 Q 100 80 92 60" fill="#E91E63"/>
+            <line x1="90" y1="65" x2="110" y2="65" stroke="#FFD700" stroke-width="2"/>
+
+            <!-- Eyes -->
+            <ellipse cx="88" cy="72" rx="3" ry="5" fill="#212121"/>
+            <ellipse cx="112" cy="72" rx="3" ry="5" fill="#212121"/>
+            <circle cx="89" cy="70" r="1" fill="#FFF"/>
+            <circle cx="113" cy="70" r="1" fill="#FFF"/>
+
+            <!-- Trunk -->
+            <path d="M 95 85 Q 90 120 115 125 Q 130 125 125 110 Q 120 105 110 112 Q 100 105 105 85 Z" fill="#FFB74D" stroke="#FF5722" stroke-width="1.5"/>
+
+            <!-- Tusk (Danta) -->
+            <path d="M 88 88 L 82 92 L 88 94 Z" fill="#FFF"/>
+
+            <!-- Body -->
+            <path d="M 60 120 Q 100 100 140 120 Q 150 170 100 180 Q 50 170 60 120 Z" fill="#FF9800"/>
+            <path d="M 65 140 Q 100 195 135 140 Q 100 185 65 140" fill="#E91E63"/>
+
+            <!-- Left Hand holding Modak -->
+            <circle cx="140" cy="135" r="12" fill="#FFB74D"/>
+            <path d="M 136 135 Q 140 123 144 135 Q 140 138 136 135 Z" fill="#FFD700"/>
+
+            <!-- Right Hand (Abhaya Mudra) -->
+            <circle cx="60" cy="135" r="12" fill="#FFB74D"/>
+            <path d="M 55 130 Q 60 125 65 130 L 65 138 L 55 138 Z" fill="#FFB74D"/>
+            <circle cx="60" cy="135" r="2" fill="#E91E63"/>
+
+            <!-- Little Mouse (Mooshak) -->
+            <ellipse cx="150" cy="175" rx="10" ry="6" fill="#757575"/>
+            <circle cx="157" cy="172" r="4" fill="#757575"/>
+            <path d="M 140 175 Q 135 170 130 176" stroke="#757575" stroke-width="1.5" fill="none"/>
+            <circle cx="158" cy="171" r="1" fill="#000"/>
+        </svg>
+
+        <!-- Offered Modaks Container -->
+        <div class="offering-display" id="offeringTray"></div>
+    </div>
+
+    <!-- Blessing Box -->
+    <div class="blessing-box" id="blessingText">
+        Tap the buttons below to seek blessings! 🙏
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="controls">
+        <button class="btn" onclick="ringBell()">🔔 Ring Bell</button>
+        <button class="btn" onclick="offerModak()">🥟 Offer Modak</button>
+        <button class="btn" onclick="toggleAarti()">🪔 Start Aarti</button>
+        <button class="btn" onclick="showerFlowers()">🌸 Flower Shower</button>
+    </div>
+
+    <!-- Mini Game Section -->
+    <div class="game-section">
+        <h2>🎮 Mini Game: Catch The Modaks!</h2>
+        <p style="font-size:0.85rem; color:#ffe0b2; margin-top:3px;">Drag finger or mouse to control the plate.</p>
+        <canvas id="game-canvas" width="300" height="200"></canvas>
+        <div style="margin-top: 8px; font-weight: bold; font-size: 1.1rem;">Score: <span id="game-score" style="color:var(--accent)">0</span></div>
+    </div>
+
+    <footer>
+        <p>Ganpati Bappa Morya! 🌺</p>
+    </footer>
+
+    <!-- JavaScript Engine -->
+    <script>
+        // Web Audio API Synthesizer (No external sound files required)
+        const AudioContext = window.AudioContext || window.webkitAudioContext;
+        let audioCtx;
+
+        function initAudio() {
+            if (!audioCtx) {
+                audioCtx = new AudioContext();
+            }
+            if (audioCtx.state === 'suspended') {
+                audioCtx.resume();
+            }
+        }
+
+        function playBellSound() {
+            initAudio();
+            if (!audioCtx) return;
+
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+
+            osc.type = 'sine';
+            osc.frequency.setValueAtTime(880, audioCtx.currentTime);
+            osc.frequency.exponentialRampToValueAtTime(110, audioCtx.currentTime + 1.2);
+
+            gain.gain.setValueAtTime(0.5, audioCtx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 1.2);
+
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+
+            osc.start();
+            osc.stop(audioCtx.currentTime + 1.2);
+        }
+
+        // Button Functions
+        function ringBell() {
+            playBellSound();
+            showBlessing("🔔 May divine bells remove all negativity!");
+            createConfetti(['🔔', '✨']);
+        }
+
+        let modakCount = 0;
+        function offerModak() {
+            modakCount++;
+            const tray = document.getElementById('offeringTray');
+            if (modakCount <= 6) {
+                tray.innerHTML += '🥟';
+            } else {
+                tray.innerHTML = '🥟'.repeat(6) + ' +' + (modakCount - 6);
+            }
+            showBlessing(`🥟 Modak offered! Bappa loves it! (Total: ${modakCount})`);
+            createConfetti(['🥟', '✨']);
+        }
+
+        let isAartiActive = false;
+        function toggleAarti() {
+            const aartiPlate = document.getElementById('aartiPlate');
+            isAartiActive = !isAartiActive;
+
+            if (isAartiActive) {
+                aartiPlate.classList.add('active');
+                showBlessing("🪔 Jai Dev, Jai Dev! Performing the holy Aarti...");
+                playBellSound();
+            } else {
+                aartiPlate.classList.remove('active');
+                showBlessing("🙏 Seek Lord Ganesha's endless blessings!");
+            }
+        }
+
+        function showerFlowers() {
+            showBlessing("🌸 Visualizing prosperity & happiness showering upon you!");
+            createConfetti(['🌸', '🌺', '🌼', '🌷', '✨']);
+        }
+
+        function showBlessing(text) {
+            document.getElementById('blessingText').innerText = text;
+        }
+
+        // Responsive Falling Petals Particle System
+        function createConfetti(symbols) {
+            const count = window.innerWidth < 600 ? 10 : 18;
+            for (let i = 0; i < count; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'petal';
+                particle.innerText = symbols[Math.floor(Math.random() * symbols.length)];
+                particle.style.left = Math.random() * 95 + 'vw';
+                particle.style.animationDuration = (Math.random() * 2 + 2) + 's';
+                document.body.appendChild(particle);
+
+                setTimeout(() => { particle.remove(); }, 3500);
+            }
+        }
+
+        // Automatic Background Flowers
+        setInterval(() => {
+            const petals = ['🌸', '🌼', '✨'];
+            const particle = document.createElement('div');
+            particle.className = 'petal';
+            particle.innerText = petals[Math.floor(Math.random() * petals.length)];
+            particle.style.left = Math.random() * 95 + 'vw';
+            particle.style.animationDuration = (Math.random() * 3 + 4) + 's';
+            particle.style.opacity = Math.random() * 0.7 + 0.3;
+            document.body.appendChild(particle);
+
+            setTimeout(() => { particle.remove(); }, 6500);
+        }, 1200);
+
+
+        /* ====================================
+           TOUCH & MOBILE FRIENDLY MINI-GAME
+        ==================================== */
+        const canvas = document.getElementById('game-canvas');
+        const ctx = canvas.getContext('2d');
+        let score = 0;
+
+        let basket = {
+            x: canvas.width / 2 - 25,
+            y: canvas.height - 20,
+            width: 50,
+            height: 12
+        };
+
+        let modaks = [];
+
+        // Polyfill for CanvasRenderingContext2D.roundRect for older mobile browsers
+        if (!ctx.roundRect) {
+            ctx.roundRect = function(x, y, width, height, radius) {
+                if (typeof radius === 'number') {
+                    radius = {tl: radius, tr: radius, br: radius, bl: radius};
+                }
+                this.beginPath();
+                this.moveTo(x + radius.tl, y);
+                this.lineTo(x + width - radius.tr, y);
+                this.quadraticCurveTo(x + width, y, x + width, y + radius.tr);
+                this.lineTo(x + width, y + height - radius.br);
+                this.quadraticCurveTo(x + width, y + height, x + width - radius.br, y + height);
+                this.lineTo(x + radius.bl, y + height);
+                this.quadraticCurveTo(x, y + height, x, y + height - radius.bl);
+                this.lineTo(x, y + radius.tl);
+                this.quadraticCurveTo(x, y, x + radius.tl, y);
+                this.closePath();
+                return this;
+            };
+        }
+
+        // Dynamic Position Tracker for Mouse & Mobile Touch
+        function moveBasket(clientX) {
+            const rect = canvas.getBoundingClientRect();
+            const scaleX = canvas.width / rect.width;
+            const canvasRelativeX = (clientX - rect.left) * scaleX;
+            basket.x = Math.max(0, Math.min(canvas.width - basket.width, canvasRelativeX - basket.width / 2));
+        }
+
+        canvas.addEventListener('mousemove', (e) => moveBasket(e.clientX));
+        
+        canvas.addEventListener('touchmove', (e) => {
+            if (e.touches.length > 0) {
+                moveBasket(e.touches[0].clientX);
+            }
+        }, { passive: true });
+
+        canvas.addEventListener('touchstart', (e) => {
+            initAudio();
+            if (e.touches.length > 0) {
+                moveBasket(e.touches[0].clientX);
+            }
+        }, { passive: true });
+
+        function spawnModak() {
+            if (Math.random() < 0.04) {
+                modaks.push({
+                    x: Math.random() * (canvas.width - 20) + 10,
+                    y: 0,
+                    speed: 2 + Math.random() * 1.8
+                });
+            }
+        }
+
+        function updateGame() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // Draw Basket / Thali
+            ctx.fillStyle = '#FFD700';
+            ctx.beginPath();
+            ctx.roundRect(basket.x, basket.y, basket.width, basket.height, 4);
+            ctx.fill();
+            ctx.strokeStyle = '#FF5722';
+            ctx.lineWidth = 1.5;
+            ctx.stroke();
+
+            // Spawn & Draw Falling Modaks
+            spawnModak();
+            for (let i = 0; i < modaks.length; i++) {
+                let m = modaks[i];
+                m.y += m.speed;
+
+                ctx.font = '16px sans-serif';
+                ctx.fillText('🥟', m.x - 8, m.y);
+
+                // Collision Detection
+                if (
+                    m.y >= basket.y - 10 &&
+                    m.y <= basket.y + basket.height &&
+                    m.x >= basket.x - 5 &&
+                    m.x <= basket.x + basket.width + 5
+                ) {
+                    score += 10;
+                    document.getElementById('game-score').innerText = score;
+                    modaks.splice(i, 1);
+                    i--;
+                } 
+                else if (m.y > canvas.height + 10) {
+                    modaks.splice(i, 1);
+                    i--;
+                }
+            }
+
+            requestAnimationFrame(updateGame);
+        }
+
+        // Start Mini Game Engine
+        updateGame();
+
+    </script>
+</body>
+</html>
